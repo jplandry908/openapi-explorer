@@ -283,8 +283,9 @@ export default class ApiRequest extends LitElement {
       };
 
       let newRows = [];
-      if (paramStyle === 'form' && paramExplode) {
-        newRows = Object.keys(param.schema.properties).map(explodedParamKey => {
+      // Only Object need special handling, arrays, are just a single property still so they should fall under the regular row generator.
+      if (paramStyle === 'form' && paramExplode && param.schema.type === 'object') {
+        newRows = Object.keys(param.schema.properties || {}).map(explodedParamKey => {
           const explodedParam = param.schema.properties[explodedParamKey];
           const explodedParamSchema = getTypeInfo(explodedParam, { includeNulls: this.includeNulls, enableExampleGeneration: true });
           return rowGenerator({ name: explodedParamKey, description: explodedParam.description, required: param.schema?.required?.includes(explodedParamKey) }, explodedParamSchema);
