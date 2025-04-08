@@ -1100,8 +1100,8 @@ export default class ApiRequest extends LitElement {
           request: fetchRequest,
         },
       };
-      document.dispatchEvent(new CustomEvent('after-try', responseEvent));
-      document.dispatchEvent(new CustomEvent('response', responseEvent));
+      this.dispatchEvent(new CustomEvent('after-try', responseEvent));
+      this.dispatchEvent(new CustomEvent('response', responseEvent));
     }
     this.requestUpdate();
   }
