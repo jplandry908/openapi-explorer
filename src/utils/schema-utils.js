@@ -21,7 +21,7 @@ export function getTypeInfo(parameter, options = { includeNulls: false, enableEx
     dataType = `{recursive: ${schema.circularReference.name}} `;
   } else if (schema.type || schema.const) {
     if (!schema.type && schema.const) {
-      schema.type = "const";
+      schema.type = 'const';
     }
     const arraySchema = Array.isArray(schema.type) ? schema.type : (typeof schema.type === 'string' ? schema.type.split('┃') : schema.type);
     dataType = Array.isArray(arraySchema) ? arraySchema.filter((s) => s !== 'null' || options.includeNulls).join('┃') : schema.type;
