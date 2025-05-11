@@ -39,7 +39,7 @@ export function expandCollapseAllComponents() {
 /* eslint-disable indent */
 export default function navbarTemplate() {
   return html`
-  <nav class='nav-bar ${this.renderStyle}' part="section-navbar">
+  <nav class='nav-bar ${this.renderStyle}' part="section-navbar" aria-label="API navigation">
     <slot name="nav-header"></slot>
     ${this.hideSearch ? ''
       : html`
