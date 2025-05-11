@@ -158,7 +158,7 @@ export default class ApiRequest extends LitElement {
         return html`
           <tr> 
             <td colspan="1" style="width:160px; min-width:50px; vertical-align: top">
-              <div class="param-name ${generatedParamSchema.deprecated ? 'deprecated' : ''}" style="margin-top: 1rem;">
+              <div class="param-name ${generatedParamSchema.deprecated ? 'deprecated' : ''}" style="margin-top: 1rem;" id="request-${paramName}">
                 ${paramName}${!generatedParamSchema.deprecated && paramRequired ? html`<span style='color:var(--red);'>*</span>` : ''}
               </div>
               <div class="param-type" style="margin-bottom: 1rem;">
@@ -175,6 +175,7 @@ export default class ApiRequest extends LitElement {
                   <tag-input class="request-param" 
                     autocomplete="on"
                     id = "request-param-${paramName}"
+                    aria-labelledby = "request-${paramName}"
                     style = "width:100%;" 
                     data-ptype = "${paramLocation}"
                     data-pname = "${paramName}"
@@ -190,6 +191,7 @@ export default class ApiRequest extends LitElement {
                   <textarea
                     autocomplete="on"
                     id = "request-param-${paramName}"
+                    aria-labelledby = "request-${paramName}"
                     @input="${() => { this.computeCurlSyntax(); }}"
                     class = "textarea small request-param"
                     part = "textarea small textarea-param"
@@ -219,6 +221,7 @@ export default class ApiRequest extends LitElement {
                   <input type="${generatedParamSchema.format === 'password' ? 'password' : 'text'}" spellcheck="false" style="width:100%; margin-top: 1rem; margin-bottom: 1rem;"
                     autocomplete="on"
                     id="request-param-${paramName}"
+                    aria-labelledby = "request-${paramName}"
                     @input="${() => { this.computeCurlSyntax(); }}"
                     placeholder="${generatedParamSchema.example || defaultVal || ''}"
                     class="request-param"
@@ -493,6 +496,7 @@ export default class ApiRequest extends LitElement {
                   @input="${() => { this.computeCurlSyntax(); }}"
                   class = "textarea request-body-param-user-input"
                   part = "textarea textarea-param"
+                  aria-label = "Request body"
                   spellcheck = "false"
                   data-ptype = "${reqBody.mimeType}" 
                   data-default = "${displayedBodyExample.exampleFormat === 'text' ? displayedBodyExample.exampleValue : JSON.stringify(displayedBodyExample.exampleValue, null, 8)}"
