@@ -17,7 +17,7 @@ export function expandedEndpointBodyTemplate(path, tag) {
     ${this.renderStyle === 'read' ? html`<div class='divider' part="operation-divider"></div>` : ''}
     <div class='expanded-endpoint-body observe-me ${path.method}' part="section-operation ${path.elementId}" id='${path.elementId}'>
       ${(this.renderStyle === 'focused' && tag && tag.name !== 'General ⦂')
-        ? html`<div class="title tag-link" data-content-id="${tag.elementId}" @click="${(e) => this.scrollToEventTarget(e, false)}"> ${tag?.name} </h2>`
+        ? html`<div class="title tag-link" role="heading" aria-level="1" data-content-id="${tag.elementId}" @click="${(e) => this.scrollToEventTarget(e, false)}"> ${tag?.name} </h2>`
         : ''}
       <slot name="${tag.elementId}"></slot>
 
@@ -92,7 +92,7 @@ export function expandedTagTemplate(tagId, subsectionFullId) {
   const subsectionId = subsectionFullId.replace(`${tagId}--`, '');
   return html`
     <section id="${tag.elementId}" part="section-tag" class="regular-font section-gap--read-mode observe-me" style="">
-      <div class="title tag" part="label-tag-title">${tag.name}</div>
+      <div class="title tag" part="label-tag-title" role="heading" aria-level="1">${tag.name}</div>
       <slot name="${tag.elementId}--subsection--${subsectionId}">
         <div class="regular-font-size">
         ${

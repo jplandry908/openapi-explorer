@@ -64,7 +64,7 @@ function endpointBodyTemplate(path) {
   <div class='endpoint-body ${path.method}'>
     <div class="summary">
       ${this.usePathInNavBar
-        ? path.summary ? html`<div class="title">${path.summary}<div>` : path.shortSummary !== path.description ? html`<div class="title">${path.shortSummary}</div>` : ''
+        ? path.summary ? html`<div class="title" role="heading" aria-level="1">${path.summary}<div>` : path.shortSummary !== path.description ? html`<div class="title" role="heading" aria-level="1">${path.shortSummary}</div>` : ''
         : html`
           <div class='title mono-font regular-font-size' part="section-operation-url" style='display: flex; flex-wrap: wrap; color:var(--fg3)'> 
             ${path.isWebhook ? html`<span style="color:var(--primary-color)"> WEBHOOK </span>` : ''}
