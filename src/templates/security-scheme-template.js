@@ -4,7 +4,7 @@ import { toMarkdown } from '../utils/common-utils.js';
 import base64url from 'base64url';
 import { getI18nText } from '../languages/index.js';
 
-function onApiKeyChange(apiKeyId, e) {
+function onUserEnteredNewApiKeyValue(apiKeyId, e) {
   e.preventDefault();
 
   let apiKeyValue = '';
@@ -347,7 +347,7 @@ function renderSecurityScheme(v) {
                 spellcheck="false" class="api-key-input fs-exclude ph-no-capture" data-hj-suppress data-sl="mask">
               <button type="submit" class="m-btn thin-border" style = "margin-left:5px;"
                 part = "btn btn-outline"
-                @click="${(e) => { onApiKeyChange.call(this, v.apiKeyId, e); }}"> 
+                @click="${(e) => { onUserEnteredNewApiKeyValue.call(this, v.apiKeyId, e); }}">
                 ${getI18nText('authentication.set')}
               </button>`
             : html`<span class="blue-text" style="margin-right: 1rem">Key Applied</span>
@@ -379,7 +379,7 @@ function renderSecurityScheme(v) {
           <input autocomplete="on" name="api-key-password" class="api-key-password fs-exclude ph-no-capture" data-hj-suppress data-sl="mask"
             type="password" value = "${v.password}" placeholder="${getI18nText('authentication.password')}" spellcheck="false" style = "width:100px; margin:0 5px;">
           <button type="submit" class="m-btn thin-border"
-            @click="${(e) => { onApiKeyChange.call(this, v.apiKeyId, e); }}"
+            @click="${(e) => { onUserEnteredNewApiKeyValue.call(this, v.apiKeyId, e); }}"
             part = "btn btn-outline"
           > 
             ${v.finalKeyValue ? 'UPDATE' : getI18nText('authentication.set')}
