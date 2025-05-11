@@ -38,6 +38,15 @@ export default css`
 .tab-btn:hover {
   color:var(--primary-color);
 }
+.tab-btn.active:hover {
+  color:var(--secondary-color);
+}
+
+.tab-btn:focus-visible {
+  outline:thin solid var(--secondary-color);
+  outline-offset: -2px;
+}
+
 .tab-content {
   position:relative;
 }

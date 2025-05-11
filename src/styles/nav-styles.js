@@ -141,13 +141,27 @@ export default css`
   background-color: var(--nav-hover-bg-color);
 }
 
+.nav-bar-h1:focus-visible,
+.nav-bar-h2:focus-visible,
+.nav-bar-info:focus-visible, slot[name=nav-section]::slotted(*:focus-visible),
+.nav-bar-tag:focus-visible,
+.nav-bar-path:focus-visible,
 .nav-bar-h1:hover,
 .nav-bar-h2:hover,
 .nav-bar-info:hover, slot[name=nav-section]::slotted(*:hover),
 .nav-bar-tag:hover,
 .nav-bar-path:hover {
+  outline: none;
   color:var(--nav-hover-text-color);
   background-color:var(--nav-hover-bg-color);
+}
+
+.nav-bar-h1.active:focus-visible,
+.nav-bar-h2.active:focus-visible,
+.nav-bar-info.active:focus-visible, slot[name=nav-section]::slotted(*.active:focus-visible),
+.nav-bar-tag.active:focus-visible,
+.nav-bar-path.active:focus-visible {
+  outline:thin solid var(--secondary-color);
 }
 
 .conditional-custom-section.custom-section::slotted(*) {
