@@ -141,6 +141,14 @@ export default css`
   background-color: var(--nav-hover-bg-color);
 }
 
+a:focus-visible,
+section .nav-bar-path:focus-visible span {
+  outline:thin solid var(--secondary-color);
+}
+section .nav-bar-path:focus-visible span {
+  outline-offset: 2px;
+}
+
 .nav-bar-h1:focus-visible,
 .nav-bar-h2:focus-visible,
 .nav-bar-info:focus-visible, slot[name=nav-section]::slotted(*:focus-visible),

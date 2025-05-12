@@ -118,14 +118,6 @@ input[type="password"]:active {
   border:1px solid var(--primary-color);
 }
 
-a:focus-visible,
-section .nav-bar-path:focus-visible span {
-  outline:thin solid var(--secondary-color);
-}
-section .nav-bar-path:focus-visible span {
-  outline-offset: 2px;
-}
-
 input[type="file"]{
   font-family: var(--font-regular);
   padding:2px;
