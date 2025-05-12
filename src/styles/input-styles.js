@@ -24,11 +24,6 @@ export default css`
   background-color: var(--primary-color);
   color: var(--primary-btn-text-color);
 }
-.m-btn.primary:hover,
-.m-btn.primary:focus-visible {
-  color: var(--primary-color);
-  background-color: var(--primary-btn-text-color);
-}
 .m-btn.outline-primary {
   color: var(--primary-color);
   background-color: var(--bg);
@@ -43,9 +38,9 @@ export default css`
 .m-btn.tiny { padding:5px 6px; }
 .m-btn.circle { border-radius: 50%; }
 .m-btn:hover,
-.m-btn:focus-visible { 
-  background-color: var(--primary-color);
-  color: var(--primary-btn-text-color);
+.m-btn:focus-visible {
+  border-color: var(--secondary-color);
+  color: var(--secondary-color);
 }
 .m-btn.nav { border: 2px solid var(--secondary-color); }
 .m-btn.nav:hover,
