@@ -158,7 +158,7 @@ export default class ApiRequest extends LitElement {
         return html`
           <tr> 
             <td colspan="1" style="width:160px; min-width:50px; vertical-align: top">
-              <div class="param-name ${generatedParamSchema.deprecated ? 'deprecated' : ''}" style="margin-top: 1rem;" id="request-${paramName}">
+              <div class="param-name ${generatedParamSchema.deprecated ? 'deprecated' : ''}" style="margin-top: 1rem;" id="request-${paramName}-label">
                 ${paramName}${!generatedParamSchema.deprecated && paramRequired ? html`<span style='color:var(--red);'>*</span>` : ''}
               </div>
               <div class="param-type" style="margin-bottom: 1rem;">
