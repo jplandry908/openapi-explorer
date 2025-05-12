@@ -496,7 +496,7 @@ export default class ApiRequest extends LitElement {
                   @input="${() => { this.computeCurlSyntax(); }}"
                   class = "textarea request-body-param-user-input"
                   part = "textarea textarea-param"
-                  aria-label = "Request body"
+                  aria-label = "${getI18nText('operations.request-body')}"
                   spellcheck = "false"
                   data-ptype = "${reqBody.mimeType}" 
                   data-default = "${displayedBodyExample.exampleFormat === 'text' ? displayedBodyExample.exampleValue : JSON.stringify(displayedBodyExample.exampleValue, null, 8)}"

@@ -1,6 +1,7 @@
 export default {
   translation: {
     'menu': {
+      'menu': 'API Menu',
       'filter': 'Filter',
       'search': 'Search',
       'overview': 'Overview',
