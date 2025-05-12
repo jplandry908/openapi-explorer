@@ -384,7 +384,7 @@ export default class ApiRequest extends LitElement {
     this.selectedRequestBodyExample = e.target.value;
     const exampleDropdownEl = e.target;
     window.setTimeout((selectEl) => {
-      const exampleTextareaEl = selectEl.closest('.example-panel').querySelector('.request-body-param');
+      const exampleTextareaEl = selectEl.closest('.example-panel').querySelector(`.request-body-param[data-example="${this.selectedRequestBodyExample}"`);
       const userInputExampleTextareaEl = selectEl.closest('.example-panel').querySelector('.request-body-param-user-input');
       userInputExampleTextareaEl.value = exampleTextareaEl.value;
       this.computeCurlSyntax();
@@ -501,19 +501,20 @@ export default class ApiRequest extends LitElement {
                   .value="${this.fillRequestWithDefault === 'true' ? (displayedBodyExample.exampleFormat === 'text' ? displayedBodyExample.exampleValue : JSON.stringify(displayedBodyExample.exampleValue, null, 8)) : ''}"
                 ></textarea>
               </slot>
-
-              <!-- This textarea(hidden) is to store the original example value, this will remain unchanged when users switches from one example to another, its is used to populate the editable textarea -->
-              <textarea
-                class = "textarea is-hidden request-body-param ${reqBody.mimeType.substring(reqBody.mimeType.indexOf('/') + 1)}" 
-                spellcheck = "false"
-                data-ptype = "${reqBody.mimeType}" 
-                style="width:100%; resize:vertical; display:none"
-                .value="${(displayedBodyExample.exampleFormat === 'text' ? displayedBodyExample.exampleValue : JSON.stringify(displayedBodyExample.exampleValue, null, 8))}"
-              ></textarea>
             </div>`
           : ''}
-
-        </div>
+          ${reqBodyExamples.map((bodyExample) => html`
+            <!-- This textarea(hidden) is to store the original example value, this will remain unchanged when users switches from one example to another, its is used to populate the editable textarea -->
+            <textarea
+              class = "textarea is-hidden request-body-param ${reqBody.mimeType.substring(reqBody.mimeType.indexOf('/') + 1)}" 
+              spellcheck = "false"
+              data-ptype = "${reqBody.mimeType}"
+              data-example = "${bodyExample.exampleId}"
+              style="width:100%; resize:vertical; display:none"
+              .value="${(bodyExample.exampleFormat === 'text' ? bodyExample.exampleValue : JSON.stringify(bodyExample.exampleValue, null, 8))}"
+            ></textarea>
+          `)}
+      </div>
       `;
     } else if (this.selectedRequestBodyType.includes('form-urlencoded') || this.selectedRequestBodyType.includes('form-data')) {
       bodyTabNameUseBody = false;
