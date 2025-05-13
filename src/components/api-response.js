@@ -104,7 +104,7 @@ export default class ApiResponse extends LitElement {
     return html`
     <div class="col regular-font response-panel ${this.renderStyle}-mode">
       <div class=" ${this.callback === 'true' ? 'tiny-title' : 'req-res-title'} "> 
-        ${this.callback === 'true' ? 'CALLBACK RESPONSE' : getI18nText('operations.response')}
+        ${this.callback === 'true' ? getI18nText('operations.callback-response') : getI18nText('operations.response')}
       </div>
       <div>
         ${this.responseTemplate()}

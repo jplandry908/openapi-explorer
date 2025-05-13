@@ -4,6 +4,7 @@ import { getSanitizedUrl, toMarkdown } from '../utils/common-utils.js';
 import { pathSecurityTemplate } from './security-scheme-template.js';
 import codeSamplesTemplate from './code-samples-template.js';
 import callbackTemplate from './callback-template.js';
+import { getI18nText } from '../languages/index.js';
 import '../components/api-request.js';
 import '../components/api-response.js';
 
@@ -25,10 +26,10 @@ export function expandedEndpointBodyTemplate(path, tag) {
         <div style="flex-grow: 1">
           <h2 style="display: flex; align-items: center;">
             <div>${path.shortSummary || `${path.method.toUpperCase()} ${path.path}`}</div>
-            <div>${path.deprecated ? html`<div>&nbsp;-<span class="bold-text red-text" style="font-size: var(--font-size-regular)"> DEPRECATED</small></div>` : ''}</div>
+            <div>${path.deprecated ? html`<div>&nbsp;-<span class="bold-text red-text" style="font-size: var(--font-size-regular)"> ${getI18nText('operations.deprecated')}</small></div>` : ''}</div>
           </h2>
           <div class='mono-font part="section-operation-url" regular-font-size' style='padding: 8px 0; color:var(--fg3)'> 
-            ${path.isWebhook ? html`<span style="color:var(--primary-color)"> WEBHOOK </span>` : ''}
+            ${path.isWebhook ? html`<span style="color:var(--primary-color)">${getI18nText('operations.webhook')}</span>` : ''}
             <span part="label-operation-method" class='regular-font upper method-fg bold-text ${path.method}'>${path.method}</span> 
             <span part="label-operation-path">${path.path}</span>
           </div>

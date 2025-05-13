@@ -1,9 +1,10 @@
 import { html } from 'lit';
+import { getI18nText } from '../languages/index.js';
 
 /* eslint-disable indent */
 export default function codeSamplesTemplate(xCodeSamples) {
   return html`
-  <section class="table-title top-gap"> CODE SAMPLES </div>
+  <section class="table-title top-gap">${getI18nText('parameters.samples')}</div>
   <div class="tab-panel col"
     @click="${
       (e) => {

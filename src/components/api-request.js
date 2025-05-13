@@ -80,7 +80,7 @@ export default class ApiRequest extends LitElement {
       <div id="api-request-${id}"
         class="api-request col regular-font request-panel ${(this.renderStyle === 'focused' || this.callback === 'true') ? 'focused-mode' : 'view-mode'}">
         <div class=" ${this.callback === 'true' ? 'tiny-title' : 'req-res-title'} "> 
-          ${this.callback === 'true' ? 'CALLBACK REQUEST' : getI18nText('operations.request')}
+          ${this.callback === 'true' ? getI18nText('operations.callback-request') : getI18nText('operations.request')}
         </div>
         <div>
           ${this.inputParametersTemplate('path')}
@@ -127,10 +127,10 @@ export default class ApiRequest extends LitElement {
     }
 
     const title = {
-      path: 'PATH PARAMETERS',
-      query: 'QUERY-STRING PARAMETERS',
-      header: 'REQUEST HEADERS',
-      cookie: 'COOKIES'
+      path: getI18nText('parameters.path'),
+      query: getI18nText('parameters.string'),
+      header: getI18nText('parameters.headers'),
+      cookie: getI18nText('parameters.cookies')
     }[paramLocation];
 
     const tableRows = [];
@@ -624,7 +624,7 @@ export default class ApiRequest extends LitElement {
           </div>` : ''
         }
         <div style="flex:1"></div>
-        ${!hasResponse ? '' : html`<button class="m-btn" part="btn btn-outline" @click="${this.clearResponseData}">CLEAR RESPONSE</button>`}
+        ${!hasResponse ? '' : html`<button class="m-btn" part="btn btn-outline" @click="${this.clearResponseData}">${getI18nText('operations.clear-response')}</button>`}
       </div>
       <div class="tab-panel col" style="border-width:0 0 1px 0;">
         <div id="tab_buttons" class="tab-buttons row" @click="${(e) => {
@@ -633,7 +633,7 @@ export default class ApiRequest extends LitElement {
         }}">
         <br>
         <div style="width: 100%">
-        <button class="tab-btn ${!hasResponse || this.activeResponseTab === 'curl' ? 'active' : ''}" data-tab = 'curl'>REQUEST</button>
+        <button class="tab-btn ${!hasResponse || this.activeResponseTab === 'curl' ? 'active' : ''}" data-tab = 'curl'>${getI18nText('operations.request')}</button>
           ${!hasResponse ? '' : html`
             <button class="tab-btn ${this.activeResponseTab === 'response' ? 'active' : ''}" data-tab = 'response'>${getI18nText('operations.response')}</button>
             <button class="tab-btn ${this.activeResponseTab === 'headers' ? 'active' : ''}"  data-tab = 'headers'>${getI18nText('operations.response-headers')}</button>`
