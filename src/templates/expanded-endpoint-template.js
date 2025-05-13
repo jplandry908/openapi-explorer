@@ -121,7 +121,7 @@ export function expandedTagTemplate(tagId, subsectionFullId) {
                 </div>`
               : p.summary || p.shortSummary
             }
-            ${p.isWebhook ? '(Webhook)' : ''}
+            ${p.isWebhook ? `(${getI18nText('operations.webhook')})` : ''}
           </span>
         </div>`)}
       </div>

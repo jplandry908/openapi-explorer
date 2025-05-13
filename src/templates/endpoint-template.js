@@ -6,6 +6,7 @@ import codeSamplesTemplate from './code-samples-template.js';
 import callbackTemplate from './callback-template.js';
 import { pathSecurityTemplate } from './security-scheme-template.js';
 import { getCurrentElement, pathIsInSearch, replaceState, toMarkdown } from '../utils/common-utils.js';
+import { getI18nText } from '../languages/index.js';
 
 function toggleExpand(path) {
   if (path.expanded) {
@@ -49,7 +50,7 @@ function endpointHeadTemplate(path) {
         ? html`<div class="path">${path.path.split('/').filter(t => t.trim()).map(t => html`<span>/${t}</span>`)}</div>`
         : html`<div class="">${path.summary || path.shortSummary}</div>`
       }
-      ${path.isWebhook ? html`<span style="color:var(--primary-color)"> (Webhook) </span>` : ''}
+      ${path.isWebhook ? html`<span style="color:var(--primary-color)"> (${getI18nText('operations.webhook')}) </span>` : ''}
     </div>
   </summary>
   `;
@@ -67,7 +68,7 @@ function endpointBodyTemplate(path) {
         ? path.summary ? html`<div class="title" role="heading" aria-level="1">${path.summary}<div>` : path.shortSummary !== path.description ? html`<div class="title" role="heading" aria-level="1">${path.shortSummary}</div>` : ''
         : html`
           <div class='title mono-font regular-font-size' part="section-operation-url" style='display: flex; flex-wrap: wrap; color:var(--fg3)'> 
-            ${path.isWebhook ? html`<span style="color:var(--primary-color)"> WEBHOOK </span>` : ''}
+            ${path.isWebhook ? html`<span style="color:var(--primary-color)">${getI18nText('operations.webhook')}</span>` : ''}
             <span part="label-operation-method" class='regular-font upper method-fg bold-text ${path.method}'>${path.method}&nbsp;</span> 
             <span style="display: flex; flex-wrap: wrap;" part="label-operation-path">${path.path.split('/').filter(t => t.trim()).map(t => html`<span>/${t}</span>`)}</span>
           </div>`
