@@ -22,7 +22,6 @@ export default css`
   color: var(--light-fg);
   background-color: transparent;
   white-space: nowrap;
-  cursor: pointer;
   outline:none;
   font-family:var(--font-regular); 
   font-size:var(--font-size-small);
@@ -35,9 +34,18 @@ export default css`
   color:var(--primary-color);
 }
 
+.tab-btn:not(.active) {
+  cursor: pointer;
+}
+
 .tab-btn:hover {
   color:var(--primary-color);
 }
+
+.tab-btn:focus-visible {
+  color:var(--secondary-color);
+}
+
 .tab-content {
   position:relative;
 }

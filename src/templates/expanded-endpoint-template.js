@@ -4,6 +4,7 @@ import { getSanitizedUrl, toMarkdown } from '../utils/common-utils.js';
 import { pathSecurityTemplate } from './security-scheme-template.js';
 import codeSamplesTemplate from './code-samples-template.js';
 import callbackTemplate from './callback-template.js';
+import { getI18nText } from '../languages/index.js';
 import '../components/api-request.js';
 import '../components/api-response.js';
 
@@ -17,7 +18,7 @@ export function expandedEndpointBodyTemplate(path, tag) {
     ${this.renderStyle === 'read' ? html`<div class='divider' part="operation-divider"></div>` : ''}
     <div class='expanded-endpoint-body observe-me ${path.method}' part="section-operation ${path.elementId}" id='${path.elementId}'>
       ${(this.renderStyle === 'focused' && tag && tag.name !== 'General ⦂')
-        ? html`<div class="title tag-link" data-content-id="${tag.elementId}" @click="${(e) => this.scrollToEventTarget(e, false)}"> ${tag?.name} </h2>`
+        ? html`<div class="title tag-link" role="heading" aria-level="1" data-content-id="${tag.elementId}" @click="${(e) => this.scrollToEventTarget(e, false)}"> ${tag?.name} </div>`
         : ''}
       <slot name="${tag.elementId}"></slot>
 
@@ -25,10 +26,10 @@ export function expandedEndpointBodyTemplate(path, tag) {
         <div style="flex-grow: 1">
           <h2 style="display: flex; align-items: center;">
             <div>${path.shortSummary || `${path.method.toUpperCase()} ${path.path}`}</div>
-            <div>${path.deprecated ? html`<div>&nbsp;-<span class="bold-text red-text" style="font-size: var(--font-size-regular)"> DEPRECATED</small></div>` : ''}</div>
+            <div>${path.deprecated ? html`<div>&nbsp;-<span class="bold-text red-text" style="font-size: var(--font-size-regular)"> ${getI18nText('operations.deprecated')}</small></div>` : ''}</div>
           </h2>
           <div class='mono-font part="section-operation-url" regular-font-size' style='padding: 8px 0; color:var(--fg3)'> 
-            ${path.isWebhook ? html`<span style="color:var(--primary-color)"> WEBHOOK </span>` : ''}
+            ${path.isWebhook ? html`<span style="color:var(--primary-color)">${getI18nText('operations.webhook')}</span>` : ''}
             <span part="label-operation-method" class='regular-font upper method-fg bold-text ${path.method}'>${path.method}</span> 
             <span part="label-operation-path">${path.path}</span>
           </div>
@@ -92,7 +93,7 @@ export function expandedTagTemplate(tagId, subsectionFullId) {
   const subsectionId = subsectionFullId.replace(`${tagId}--`, '');
   return html`
     <section id="${tag.elementId}" part="section-tag" class="regular-font section-gap--read-mode observe-me" style="">
-      <div class="title tag" part="label-tag-title">${tag.name}</div>
+      <div class="title tag" part="label-tag-title" role="heading" aria-level="1">${tag.name}</div>
       <slot name="${tag.elementId}--subsection--${subsectionId}">
         <div class="regular-font-size">
         ${
@@ -110,8 +111,8 @@ export function expandedTagTemplate(tagId, subsectionFullId) {
 
       <div class='nav-bar-paths-under-tag' style="max-width: 300px">
         ${tag.paths.map((p) => html`
-        <div class='nav-bar-path ${this.usePathInNavBar ? 'small-font' : ''}'
-          data-content-id='${p.elementId}' id='link-${p.elementId}' @click = '${(e) => { this.scrollToEventTarget(e, false); }}'>
+        <div class='nav-bar-path ${this.usePathInNavBar ? 'small-font' : ''}' role="link" tabindex="0"
+          data-content-id='${p.elementId}' id='link-${p.elementId}' @click = '${(e) => { this.scrollToEventTarget(e, false); }}' @keydown = '${(e) => { if (e.key === 'Enter') { e.target.click(); }}}'>
           <span style="${p.deprecated ? 'filter:opacity(0.5)' : ''}">
             ${this.usePathInNavBar
               ? html`<div class='mono-font' style="display: flex; align-items: center;">
@@ -120,7 +121,7 @@ export function expandedTagTemplate(tagId, subsectionFullId) {
                 </div>`
               : p.summary || p.shortSummary
             }
-            ${p.isWebhook ? '(Webhook)' : ''}
+            ${p.isWebhook ? `(${getI18nText('operations.webhook')})` : ''}
           </span>
         </div>`)}
       </div>

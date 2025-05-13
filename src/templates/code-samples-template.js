@@ -1,9 +1,10 @@
 import { html } from 'lit';
+import { getI18nText } from '../languages/index.js';
 
 /* eslint-disable indent */
 export default function codeSamplesTemplate(xCodeSamples) {
   return html`
-  <section class="table-title top-gap"> CODE SAMPLES </div>
+  <section class="table-title top-gap">${getI18nText('parameters.samples')}</div>
   <div class="tab-panel col"
     @click="${
       (e) => {
@@ -16,8 +17,8 @@ export default function codeSamplesTemplate(xCodeSamples) {
         tabContents.forEach((tabBodyEl) => { tabBodyEl.style.display = (tabBodyEl.dataset.tab === clickedTab ? 'block' : 'none'); });
       }
     }">
-    <div class="tab-buttons row" style="width:100; overflow">
-      ${xCodeSamples.map((v, i) => html`<button class="tab-btn ${i === 0 ? 'active' : ''}" data-tab = '${v.lang}${i}'> ${v.label || v.lang} </button>`)}
+    <div class="tab-buttons row" role="group" style="width:100; overflow">
+      ${xCodeSamples.map((v, i) => html`<button class="tab-btn ${i === 0 ? 'active' : ''}" aria-current='${i === 0}' data-tab = '${v.lang}${i}'> ${v.label || v.lang} </button>`)}
     </div>
     ${xCodeSamples.map((v, i) => {
       // We skip the first line because it could be there is no padding there, but padding on the next lines which needs to be removed

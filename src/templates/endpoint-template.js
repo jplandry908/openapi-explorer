@@ -6,6 +6,7 @@ import codeSamplesTemplate from './code-samples-template.js';
 import callbackTemplate from './callback-template.js';
 import { pathSecurityTemplate } from './security-scheme-template.js';
 import { getCurrentElement, pathIsInSearch, replaceState, toMarkdown } from '../utils/common-utils.js';
+import { getI18nText } from '../languages/index.js';
 
 function toggleExpand(path) {
   if (path.expanded) {
@@ -43,13 +44,13 @@ export function expandCollapseComponent(component) {
 function endpointHeadTemplate(path) {
   return html`
   <summary @click="${(e) => { toggleExpand.call(this, path, e); }}" class='endpoint-head ${path.method} ${path.expanded ? 'expanded' : 'collapsed'}'>
-    <div class="method ${path.method}"><span style="line-height: 1;">${path.method}</span></div> 
+    <div class="method ${path.method}" role="heading" aria-level="3"><span style="line-height: 1;">${path.method}</span></div> 
     <div style="${path.deprecated ? 'text-decoration: line-through;' : ''}">
       ${this.usePathInNavBar
         ? html`<div class="path">${path.path.split('/').filter(t => t.trim()).map(t => html`<span>/${t}</span>`)}</div>`
         : html`<div class="">${path.summary || path.shortSummary}</div>`
       }
-      ${path.isWebhook ? html`<span style="color:var(--primary-color)"> (Webhook) </span>` : ''}
+      ${path.isWebhook ? html`<span style="color:var(--primary-color)"> (${getI18nText('operations.webhook')}) </span>` : ''}
     </div>
   </summary>
   `;
@@ -64,10 +65,10 @@ function endpointBodyTemplate(path) {
   <div class='endpoint-body ${path.method}'>
     <div class="summary">
       ${this.usePathInNavBar
-        ? path.summary ? html`<div class="title">${path.summary}<div>` : path.shortSummary !== path.description ? html`<div class="title">${path.shortSummary}</div>` : ''
+        ? path.summary ? html`<div class="title" role="heading" aria-level="1">${path.summary}<div>` : path.shortSummary !== path.description ? html`<div class="title" role="heading" aria-level="1">${path.shortSummary}</div>` : ''
         : html`
           <div class='title mono-font regular-font-size' part="section-operation-url" style='display: flex; flex-wrap: wrap; color:var(--fg3)'> 
-            ${path.isWebhook ? html`<span style="color:var(--primary-color)"> WEBHOOK </span>` : ''}
+            ${path.isWebhook ? html`<span style="color:var(--primary-color)">${getI18nText('operations.webhook')}</span>` : ''}
             <span part="label-operation-method" class='regular-font upper method-fg bold-text ${path.method}'>${path.method}&nbsp;</span> 
             <span style="display: flex; flex-wrap: wrap;" part="label-operation-path">${path.path.split('/').filter(t => t.trim()).map(t => html`<span>/${t}</span>`)}</span>
           </div>`
@@ -132,7 +133,7 @@ export default function endpointTemplate() {
     <div class='regular-font method-section-gap section-tag ${tag.expanded ? 'expanded' : 'collapsed'}'> 
     
       <div class='section-tag-header' @click="${(e) => toggleTag.call(this, e, tag.elementId)}">
-        <div id='${tag.elementId}' class="sub-title tag" style="color:var(--primary-color)">${tag.name}</div>
+        <div id='${tag.elementId}' class="sub-title tag" role="heading" aria-level="2" style="color:var(--primary-color)">${tag.name}</div>
       </div>
       <div class='section-tag-body'>
         <slot name="${tag.elementId}"></slot>

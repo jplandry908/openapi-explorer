@@ -79,8 +79,8 @@ export default class ApiRequest extends LitElement {
     return keyed(id, html`
       <div id="api-request-${id}"
         class="api-request col regular-font request-panel ${(this.renderStyle === 'focused' || this.callback === 'true') ? 'focused-mode' : 'view-mode'}">
-        <div class=" ${this.callback === 'true' ? 'tiny-title' : 'req-res-title'} "> 
-          ${this.callback === 'true' ? 'CALLBACK REQUEST' : getI18nText('operations.request')}
+        <div class=" ${this.callback === 'true' ? 'tiny-title' : 'req-res-title'} " role="heading" aria-level="${this.renderStyle === 'focused' ? 3 : 4}"> 
+          ${this.callback === 'true' ? getI18nText('operations.callback-request') : getI18nText('operations.request')}
         </div>
         <div>
           ${this.inputParametersTemplate('path')}
@@ -127,10 +127,10 @@ export default class ApiRequest extends LitElement {
     }
 
     const title = {
-      path: 'PATH PARAMETERS',
-      query: 'QUERY-STRING PARAMETERS',
-      header: 'REQUEST HEADERS',
-      cookie: 'COOKIES'
+      path: getI18nText('parameters.path'),
+      query: getI18nText('parameters.string'),
+      header: getI18nText('parameters.headers'),
+      cookie: getI18nText('parameters.cookies')
     }[paramLocation];
 
     const tableRows = [];
@@ -158,7 +158,7 @@ export default class ApiRequest extends LitElement {
         return html`
           <tr> 
             <td colspan="1" style="width:160px; min-width:50px; vertical-align: top">
-              <div class="param-name ${generatedParamSchema.deprecated ? 'deprecated' : ''}" style="margin-top: 1rem;">
+              <div class="param-name ${generatedParamSchema.deprecated ? 'deprecated' : ''}" style="margin-top: 1rem;" id="request-${paramName}-label">
                 ${paramName}${!generatedParamSchema.deprecated && paramRequired ? html`<span style='color:var(--red);'>*</span>` : ''}
               </div>
               <div class="param-type" style="margin-bottom: 1rem;">
@@ -175,6 +175,7 @@ export default class ApiRequest extends LitElement {
                   <tag-input class="request-param" 
                     autocomplete="on"
                     id = "request-param-${paramName}"
+                    aria-labelledby = "request-${paramName}-label"
                     style = "width:100%;" 
                     data-ptype = "${paramLocation}"
                     data-pname = "${paramName}"
@@ -190,6 +191,7 @@ export default class ApiRequest extends LitElement {
                   <textarea
                     autocomplete="on"
                     id = "request-param-${paramName}"
+                    aria-labelledby = "request-${paramName}-label"
                     @input="${() => { this.computeCurlSyntax(); }}"
                     class = "textarea small request-param"
                     part = "textarea small textarea-param"
@@ -219,6 +221,7 @@ export default class ApiRequest extends LitElement {
                   <input type="${generatedParamSchema.format === 'password' ? 'password' : 'text'}" spellcheck="false" style="width:100%; margin-top: 1rem; margin-bottom: 1rem;"
                     autocomplete="on"
                     id="request-param-${paramName}"
+                    aria-labelledby = "request-${paramName}-label"
                     @input="${() => { this.computeCurlSyntax(); }}"
                     placeholder="${generatedParamSchema.example || defaultVal || ''}"
                     class="request-param"
@@ -384,7 +387,7 @@ export default class ApiRequest extends LitElement {
     this.selectedRequestBodyExample = e.target.value;
     const exampleDropdownEl = e.target;
     window.setTimeout((selectEl) => {
-      const exampleTextareaEl = selectEl.closest('.example-panel').querySelector(`.request-body-param[data-example="${this.selectedRequestBodyExample}"`);
+      const exampleTextareaEl = selectEl.closest('.example-panel').querySelector('.request-body-param');
       const userInputExampleTextareaEl = selectEl.closest('.example-panel').querySelector('.request-body-param-user-input');
       userInputExampleTextareaEl.value = exampleTextareaEl.value;
       this.computeCurlSyntax();
@@ -493,6 +496,7 @@ export default class ApiRequest extends LitElement {
                   @input="${() => { this.computeCurlSyntax(); }}"
                   class = "textarea request-body-param-user-input"
                   part = "textarea textarea-param"
+                  aria-label = "${getI18nText('operations.request-body')}"
                   spellcheck = "false"
                   data-ptype = "${reqBody.mimeType}" 
                   data-default = "${displayedBodyExample.exampleFormat === 'text' ? displayedBodyExample.exampleValue : JSON.stringify(displayedBodyExample.exampleValue, null, 8)}"
@@ -501,20 +505,19 @@ export default class ApiRequest extends LitElement {
                   .value="${this.fillRequestWithDefault === 'true' ? (displayedBodyExample.exampleFormat === 'text' ? displayedBodyExample.exampleValue : JSON.stringify(displayedBodyExample.exampleValue, null, 8)) : ''}"
                 ></textarea>
               </slot>
+
+              <!-- This textarea(hidden) is to store the original example value, this will remain unchanged when users switches from one example to another, its is used to populate the editable textarea -->
+              <textarea
+                class = "textarea is-hidden request-body-param ${reqBody.mimeType.substring(reqBody.mimeType.indexOf('/') + 1)}" 
+                spellcheck = "false"
+                data-ptype = "${reqBody.mimeType}" 
+                style="width:100%; resize:vertical; display:none"
+                .value="${(displayedBodyExample.exampleFormat === 'text' ? displayedBodyExample.exampleValue : JSON.stringify(displayedBodyExample.exampleValue, null, 8))}"
+              ></textarea>
             </div>`
           : ''}
-          ${reqBodyExamples.map((bodyExample) => html`
-            <!-- This textarea(hidden) is to store the original example value, this will remain unchanged when users switches from one example to another, its is used to populate the editable textarea -->
-            <textarea
-              class = "textarea is-hidden request-body-param ${reqBody.mimeType.substring(reqBody.mimeType.indexOf('/') + 1)}" 
-              spellcheck = "false"
-              data-ptype = "${reqBody.mimeType}"
-              data-example = "${bodyExample.exampleId}"
-              style="width:100%; resize:vertical; display:none"
-              .value="${(bodyExample.exampleFormat === 'text' ? bodyExample.exampleValue : JSON.stringify(bodyExample.exampleValue, null, 8))}"
-            ></textarea>
-          `)}
-      </div>
+
+        </div>
       `;
     } else if (this.selectedRequestBodyType.includes('form-urlencoded') || this.selectedRequestBodyType.includes('form-data')) {
       bodyTabNameUseBody = false;
@@ -583,9 +586,9 @@ export default class ApiRequest extends LitElement {
         ${reqBodySchemaHtml || reqBodyDefaultHtml
           ? html`
             <div class="tab-panel col" style="border-width:0 0 1px 0;">
-              <div class="tab-buttons row" @click="${(e) => { if (e.target.tagName.toLowerCase() === 'button') { this.activeSchemaTab = e.target.dataset.tab; } }}">
-                <button class="tab-btn ${this.activeSchemaTab === 'model' ? 'active' : ''}" data-tab="model" >${getI18nText('operations.model')}</button>
-                <button class="tab-btn ${this.activeSchemaTab !== 'model' ? 'active' : ''}" data-tab="body">${bodyTabNameUseBody ? getI18nText('operations.body') : getI18nText('operations.form')}</button>
+              <div class="tab-buttons row" role="group" @click="${(e) => { if (e.target.tagName.toLowerCase() === 'button') { this.activeSchemaTab = e.target.dataset.tab; } }}">
+                <button class="tab-btn ${this.activeSchemaTab === 'model' ? 'active' : ''}" aria-current="${this.activeSchemaTab === 'model'}" data-tab="model" >${getI18nText('operations.model')}</button>
+                <button class="tab-btn ${this.activeSchemaTab !== 'model' ? 'active' : ''}" aria-current="${this.activeSchemaTab !== 'model'}" data-tab="body">${bodyTabNameUseBody ? getI18nText('operations.body') : getI18nText('operations.form')}</button>
               </div>
               ${html`<div class="tab-content col" style="display: ${this.activeSchemaTab === 'model' ? 'block' : 'none'}"> ${reqBodySchemaHtml}</div>`}
               ${html`<div class="tab-content col" style="display: ${this.activeSchemaTab === 'model' ? 'none' : 'block'}"> ${reqBodyDefaultHtml}</div>`}
@@ -621,7 +624,7 @@ export default class ApiRequest extends LitElement {
           </div>` : ''
         }
         <div style="flex:1"></div>
-        ${!hasResponse ? '' : html`<button class="m-btn" part="btn btn-outline" @click="${this.clearResponseData}">CLEAR RESPONSE</button>`}
+        ${!hasResponse ? '' : html`<button class="m-btn" part="btn btn-outline" @click="${this.clearResponseData}">${getI18nText('operations.clear-response')}</button>`}
       </div>
       <div class="tab-panel col" style="border-width:0 0 1px 0;">
         <div id="tab_buttons" class="tab-buttons row" @click="${(e) => {
@@ -630,7 +633,7 @@ export default class ApiRequest extends LitElement {
         }}">
         <br>
         <div style="width: 100%">
-        <button class="tab-btn ${!hasResponse || this.activeResponseTab === 'curl' ? 'active' : ''}" data-tab = 'curl'>REQUEST</button>
+        <button class="tab-btn ${!hasResponse || this.activeResponseTab === 'curl' ? 'active' : ''}" data-tab = 'curl'>${getI18nText('operations.request')}</button>
           ${!hasResponse ? '' : html`
             <button class="tab-btn ${this.activeResponseTab === 'response' ? 'active' : ''}" data-tab = 'response'>${getI18nText('operations.response')}</button>
             <button class="tab-btn ${this.activeResponseTab === 'headers' ? 'active' : ''}"  data-tab = 'headers'>${getI18nText('operations.response-headers')}</button>`

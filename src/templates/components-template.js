@@ -74,7 +74,7 @@ export default function componentsTemplate() {
     const componentInfo = getComponentInfo(component.componentKeyId);
     return html`
       <div id="cmp--${componentInfo.name.toLowerCase()}" class='regular-font section-gap--focused-mode observe-me' style="padding-bottom: 0">
-        <div class="title tag">${componentInfo.name}</div>
+        <div class="title tag" role="heading" aria-level="1">${componentInfo.name}</div>
         <div class="regular-font-size">
           ${unsafeHTML(`<div class='m-markdown regular-font'>${toMarkdown(componentInfo.description ? componentInfo.description : '')}</div>`)}
         </div>

@@ -37,12 +37,21 @@ export default css`
 .m-btn.small { padding:5px 12px; }
 .m-btn.tiny { padding:5px 6px; }
 .m-btn.circle { border-radius: 50%; }
-.m-btn:hover { 
+
+.m-btn:hover,
+.m-btn:focus-visible,
+.m-btn.outline-primary:focus-visible {
+  color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+.m-btn.primary:focus-visible {
+  color: var(--secondary-color);
   background-color: var(--primary-color);
-  color: var(--primary-btn-text-color);
+  border-color: var(--secondary-color);
 }
 .m-btn.nav { border: 2px solid var(--secondary-color); }
-.m-btn.nav:hover { 
+.m-btn.nav:hover,
+.m-btn.nav:focus-visible { 
   background-color: var(--secondary-color);
 }
 .m-btn:disabled{ 
