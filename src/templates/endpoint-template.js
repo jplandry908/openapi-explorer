@@ -44,7 +44,7 @@ export function expandCollapseComponent(component) {
 function endpointHeadTemplate(path) {
   return html`
   <summary @click="${(e) => { toggleExpand.call(this, path, e); }}" class='endpoint-head ${path.method} ${path.expanded ? 'expanded' : 'collapsed'}'>
-    <div class="method ${path.method}"><span style="line-height: 1;">${path.method}</span></div> 
+    <div class="method ${path.method}" role="heading" aria-level="3"><span style="line-height: 1;">${path.method}</span></div> 
     <div style="${path.deprecated ? 'text-decoration: line-through;' : ''}">
       ${this.usePathInNavBar
         ? html`<div class="path">${path.path.split('/').filter(t => t.trim()).map(t => html`<span>/${t}</span>`)}</div>`
@@ -133,7 +133,7 @@ export default function endpointTemplate() {
     <div class='regular-font method-section-gap section-tag ${tag.expanded ? 'expanded' : 'collapsed'}'> 
     
       <div class='section-tag-header' @click="${(e) => toggleTag.call(this, e, tag.elementId)}">
-        <div id='${tag.elementId}' class="sub-title tag" style="color:var(--primary-color)">${tag.name}</div>
+        <div id='${tag.elementId}' class="sub-title tag" role="heading" aria-level="2" style="color:var(--primary-color)">${tag.name}</div>
       </div>
       <div class='section-tag-body'>
         <slot name="${tag.elementId}"></slot>

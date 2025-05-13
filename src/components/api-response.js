@@ -103,7 +103,7 @@ export default class ApiResponse extends LitElement {
   render() {
     return html`
     <div class="col regular-font response-panel ${this.renderStyle}-mode">
-      <div class=" ${this.callback === 'true' ? 'tiny-title' : 'req-res-title'} "> 
+      <div class=" ${this.callback === 'true' ? 'tiny-title' : 'req-res-title'} " role="heading" aria-level="${this.renderStyle === 'focused' ? 3 : 4}"> 
         ${this.callback === 'true' ? getI18nText('operations.callback-response') : getI18nText('operations.response')}
       </div>
       <div>

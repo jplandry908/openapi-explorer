@@ -405,7 +405,7 @@ export default function securitySchemeTemplate() {
     <slot name="authentication">
       <div class="section-padding">
         <slot name="authentication-header">
-          <div class="sub-title regular-font">${getI18nText('headers.authentication')}</div>
+          <div class="sub-title regular-font" role="heading" aria-level="2">${getI18nText('headers.authentication')}</div>
         </slot>
         <div class="small-font-size" style="display:flex; align-items: center; min-height:40px">
           ${providedApiKeys.length > 0

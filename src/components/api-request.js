@@ -79,7 +79,7 @@ export default class ApiRequest extends LitElement {
     return keyed(id, html`
       <div id="api-request-${id}"
         class="api-request col regular-font request-panel ${(this.renderStyle === 'focused' || this.callback === 'true') ? 'focused-mode' : 'view-mode'}">
-        <div class=" ${this.callback === 'true' ? 'tiny-title' : 'req-res-title'} "> 
+        <div class=" ${this.callback === 'true' ? 'tiny-title' : 'req-res-title'} " role="heading" aria-level="${this.renderStyle === 'focused' ? 3 : 4}"> 
           ${this.callback === 'true' ? getI18nText('operations.callback-request') : getI18nText('operations.request')}
         </div>
         <div>

@@ -7,7 +7,7 @@ export default function callbackTemplate(callbacks) {
   <div class="api-request col regular-font request-panel ${this.renderStyle}-mode">
     ${Object.entries(callbacks).map((kv) => html`
       <div class="${this.renderStyle}-request"> 
-        <div class="req-res-title">${getI18nText('menu.callbacks')}</div>
+        <div class="req-res-title" role="heading" aria-level="3">${getI18nText('menu.callbacks')}</div>
         <div class="table-title">${kv[0]}</div>
         ${Object.entries(kv[1]).map((pathObj) => html`
           <div class="mono-font small-font-size" style="display:flex;">
