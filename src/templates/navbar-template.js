@@ -62,7 +62,7 @@ export default function navbarTemplate() {
     ${html`<nav class='nav-scroll' part="navbar-scroll">
       ${(this.hideInfo || !this.resolvedSpec.info)
         ? ''
-        : html`<div class='nav-bar-info' id='link-overview' data-content-id='overview' @click = '${(e) => this.scrollToEventTarget(e, false)}' role="link" tabindex="0" @keydown = '${(e) => { if (['Enter', 'Space'].includes(e.key)) { e.target.click(); }}}';
+        : html`<div class='nav-bar-info' id='link-overview' data-content-id='overview' @click = '${(e) => this.scrollToEventTarget(e, false)}' role="link" tabindex="0" @keydown = '${(e) => { if (['Enter'].includes(e.key)) { e.target.click(); }}}';
       }>
           ${this.resolvedSpec.info.title || getI18nText('menu.overview')}
         </div>`
@@ -70,11 +70,11 @@ export default function navbarTemplate() {
     
       ${this.hideServerSelection
         ? ''
-        : html`<div class='nav-bar-info' id='link-servers' data-content-id='servers' @click = '${(e) => this.scrollToEventTarget(e, false)}' role="link" tabindex="0" @keydown = '${(e) => { if (['Enter', 'Space'].includes(e.key)) { e.target.click(); }}}'> ${getI18nText('menu.api-servers')} </div>`
+        : html`<div class='nav-bar-info' id='link-servers' data-content-id='servers' @click = '${(e) => this.scrollToEventTarget(e, false)}' role="link" tabindex="0" @keydown = '${(e) => { if (['Enter'].includes(e.key)) { e.target.click(); }}}'> ${getI18nText('menu.api-servers')} </div>`
       }
       ${(this.hideAuthentication || !this.resolvedSpec.securitySchemes)
         ? ''
-        : html`<div class='nav-bar-info' id='link-auth' data-content-id='auth' @click = '${(e) => this.scrollToEventTarget(e, false)}' role="link" tabindex="0" @keydown = '${(e) => { if (['Enter', 'Space'].includes(e.key)) { e.target.click(); }}}'> ${getI18nText('menu.authentication')} </div>`
+        : html`<div class='nav-bar-info' id='link-auth' data-content-id='auth' @click = '${(e) => this.scrollToEventTarget(e, false)}' role="link" tabindex="0" @keydown = '${(e) => { if (['Enter'].includes(e.key)) { e.target.click(); }}}'> ${getI18nText('menu.authentication')} </div>`
       }
 
       <slot name="nav-section" class="custom-nav-section" data-content-id='section' @click = '${(e) => this.scrollToCustomNavSectionTarget(e, false)}'></slot>
@@ -105,7 +105,7 @@ export default function navbarTemplate() {
                 : html`
                   <div class='nav-bar-tag' id="link-${tag.elementId}" data-content-id='${tag.elementId}' role="link" tabindex="0"
                     @click='${e => { onExpandCollapseTag.call(this, e, tag.elementId); }}'
-                    @keydown='${(e) => { if (['Enter', 'Space'].includes(e.key)) { e.target.click(); }}}'
+                    @keydown='${(e) => { if (['Enter'].includes(e.key)) { e.target.click(); }}}'
                     >
 
                     <div style="display: flex; justify-content: space-between; width: 100%;">
@@ -132,7 +132,7 @@ export default function navbarTemplate() {
                   <!-- Paths in each tag (endpoints) -->
                   ${tag.paths.filter((v) => pathIsInSearch(this.matchPaths, v)).map((p) => html`
                   <div class='nav-bar-path ${this.usePathInNavBar ? 'small-font' : ''}'
-                    data-content-id='${p.elementId}' id='link-${p.elementId}' @click = '${(e) => { this.scrollToEventTarget(e, false); }}' role="link" tabindex="0" @keydown = '${(e) => { if (['Enter', 'Space'].includes(e.key)) { e.target.click(); }}}'>
+                    data-content-id='${p.elementId}' id='link-${p.elementId}' @click = '${(e) => { this.scrollToEventTarget(e, false); }}' role="link" tabindex="0" @keydown = '${(e) => { if (['Enter'].includes(e.key)) { e.target.click(); }}}'>
                     <span style="${p.deprecated ? 'filter:opacity(0.5)' : ''}">
                       ${this.usePathInNavBar
                         ? html`<div class='mono-font' style="display: flex; align-items: center;">
@@ -175,7 +175,7 @@ export default function navbarTemplate() {
                     this.scrollToEventTarget(e, false);
                   }}"
                   @keydown="${(e) => {
-                    if (['Enter', 'Space'].includes(e.key)) {
+                    if (['Enter'].includes(e.key)) {
                       e.target.click();
                     }
                   }}">
