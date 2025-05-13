@@ -158,7 +158,7 @@ export default class ApiResponse extends LitElement {
       this.headersForEachRespStatus[statusCode] = tempHeaders;
       this.mimeResponsesForEachStatus[statusCode] = allMimeResp;
     }
-    return html`<div class='row' style='flex-wrap:wrap'>
+    return html`<div class='row' style='flex-wrap:wrap' role="group">
       ${Object.keys(this.responses).map((respStatus) => html`
         ${respStatus === '$$ref' // Swagger-Client parser creates '$$ref' object if JSON references are used to create responses - this should be ignored
           ? ''
@@ -172,6 +172,7 @@ export default class ApiResponse extends LitElement {
                   this.selectedMimeType = undefined;
                 }
               }}"
+              aria-current="${this.selectedStatus === respStatus}"
               class='m-btn small ${this.selectedStatus === respStatus ? 'primary' : ''}'
               part="btn--resp ${this.selectedStatus === respStatus ? 'btn-fill--resp' : 'btn-outline--resp'} btn-response-status"
               style='margin: 8px 4px 0 0; text-transform: capitalize'> 
@@ -194,9 +195,9 @@ export default class ApiResponse extends LitElement {
             ? ''
             : html`
               <div class="tab-panel col">
-                <div class="tab-buttons row" @click="${(e) => { if (e.target.tagName.toLowerCase() === 'button') { this.activeSchemaTab = e.target.dataset.tab; } }}" >
-                  <button class="tab-btn ${this.activeSchemaTab === 'model' ? 'active' : ''}" data-tab='model'>${getI18nText('operations.model')}</button>
-                  <button class="tab-btn ${this.activeSchemaTab !== 'model' ? 'active' : ''}" data-tab='body'>${getI18nText('operations.example')}</button>
+                <div class="tab-buttons row" role="group" @click="${(e) => { if (e.target.tagName.toLowerCase() === 'button') { this.activeSchemaTab = e.target.dataset.tab; } }}" >
+                  <button class="tab-btn ${this.activeSchemaTab === 'model' ? 'active' : ''}" aria-current="${this.activeSchemaTab === 'model'}" data-tab='model'>${getI18nText('operations.model')}</button>
+                  <button class="tab-btn ${this.activeSchemaTab !== 'model' ? 'active' : ''}" aria-current="${this.activeSchemaTab !== 'model'}" data-tab='body'>${getI18nText('operations.example')}</button>
                   <div style="flex:1"></div>
                   ${Object.keys(this.mimeResponsesForEachStatus[status]).length === 1
                     ? html`<span class='small-font-size gray-text' style='align-self:center; margin-top:8px;'> ${Object.keys(this.mimeResponsesForEachStatus[status])[0]} </span>`
