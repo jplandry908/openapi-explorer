@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { getI18nText } from '../languages/index.js';
 
 /* eslint-disable indent */
 export default function callbackTemplate(callbacks) {
