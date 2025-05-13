@@ -111,7 +111,7 @@ export function expandedTagTemplate(tagId, subsectionFullId) {
       <div class='nav-bar-paths-under-tag' style="max-width: 300px">
         ${tag.paths.map((p) => html`
         <div class='nav-bar-path ${this.usePathInNavBar ? 'small-font' : ''}' role="link" tabindex="0"
-          data-content-id='${p.elementId}' id='link-${p.elementId}' @click = '${(e) => { this.scrollToEventTarget(e, false); }}' @keydown = '${(e) => { if (e.key == 'Enter') { e.target.click(); }}}'>
+          data-content-id='${p.elementId}' id='link-${p.elementId}' @click = '${(e) => { this.scrollToEventTarget(e, false); }}' @keydown = '${(e) => { if (e.key === 'Enter') { e.target.click(); }}}'>
           <span style="${p.deprecated ? 'filter:opacity(0.5)' : ''}">
             ${this.usePathInNavBar
               ? html`<div class='mono-font' style="display: flex; align-items: center;">
